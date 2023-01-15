@@ -255,7 +255,7 @@ function Register() {
                 type="submit"
                 variant="contained"
                 color="error"
-                sx={{ width: "20%" }}
+                sx={{ width: { xs: "100%", md: "20%" } }}
               >
                 Submit
               </Button>
