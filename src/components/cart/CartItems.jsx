@@ -5,7 +5,7 @@ function CartItems() {
   return (
     <>
       <Container sx={{ p: 2 }}>
-        <Typography variant="h4" sx={{ m: 2 }}>
+        <Typography variant="h4" sx={{ m: 2 }} className="carthead">
           Cart Items
         </Typography>
         <hr></hr>
@@ -45,7 +45,12 @@ function CartItems() {
               size="large"
               disabled
               variant="contained"
-              sx={{ p: 0, mx: 2 }}
+              sx={{
+                p: 0,
+                mx: 2,
+                bgcolor: "gray!important",
+                color: "white!important",
+              }}
             >
               0
             </Button>
@@ -61,10 +66,15 @@ function CartItems() {
 
           <Grid xs={5} md={1}>
             <Button
-              size="small"
+              size="large"
               disabled
               variant="contained"
-              sx={{ p: "5px", m: "0px" }}
+              sx={{
+                p: 0,
+                mx: 2,
+                bgcolor: "gray!important",
+                color: "white!important",
+              }}
             >
               $13
             </Button>

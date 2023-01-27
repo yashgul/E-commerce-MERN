@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { Controller, useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+
 import { NavLink } from "react-router-dom";
 function Register() {
   const {
@@ -30,6 +30,7 @@ function Register() {
     <>
       <Navbar />
       <Card
+        className="order-summary-background"
         sx={{
           width: { xs: "100vw", md: "50vw" },
           margin: "auto",

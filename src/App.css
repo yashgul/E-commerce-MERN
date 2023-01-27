@@ -6,3 +6,47 @@
 .MuiFormHelperText-root {
   margin-left: 3px !important;
 }
+
+[data-theme="dark"] {
+  --font-color: #eee;
+  --background-color: #333;
+  --link-color: lightblue;
+  --card-bg: lightgray;
+  --card-heading: #333;
+  --card-text: gray;
+  --order-summary-background: lightgray;
+}
+
+[data-theme="light"] {
+  --font-color: black;
+  --background-color: white;
+  --link-color: lightblue;
+  --card-bg: white;
+  --card-heading: black;
+  --card-text: black;
+  --order-summary-background: rgb(221, 217, 217);
+}
+
+.cardbg {
+  background-color: var(--card-bg) !important;
+}
+
+.cardtext {
+  color: var(--card-text) !important;
+}
+
+.cardhead {
+  color: var(--card-heading) !important;
+}
+
+.carthead {
+  color: var(--font-color);
+}
+
+.order-summary-background {
+  /* background-color: var(--order-summary-background) !important; */
+  background-color: lightgray !important;
+}
+body {
+  background-color: var(--background-color) !important;
+}

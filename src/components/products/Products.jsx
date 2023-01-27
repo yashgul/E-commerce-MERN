@@ -13,9 +13,9 @@ import Navbar from "../navbar/Navbar";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
+import Badge from "@mui/material/Badge";
 
-import { useInView } from "react-intersection-observer";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 function Products() {
   let arr = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -32,7 +32,7 @@ function Products() {
           justifyContent="center"
         >
           {arr.map((item) => (
-            <Grid xs={11} md={6} lg={3}>
+            <Grid xs={11} md={6} lg={4} xl={3}>
               <motion.div
                 initial="hidden"
                 variants={{
@@ -52,85 +52,93 @@ function Products() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <Card>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image="https://img.freepik.com/free-photo/dessert-fruitcake_144627-10454.jpg?size=626&ext=jpg"
-                      alt="green iguana"
-                    />
-                    <CardContent>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
+                <Badge badgeContent={"3 left"} color="warning">
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://img.freepik.com/free-photo/dessert-fruitcake_144627-10454.jpg?size=626&ext=jpg"
+                        alt="green iguana"
+                      />
+                      <CardContent className="cardbg" sx={{ bgcolor: "#333" }}>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          sx={{
+                            textAlign: "center",
+                          }}
+                          className="cardhead"
+                        >
+                          Lizard
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            textAlign: "center",
+                          }}
+                          className="cardtext"
+                        >
+                          Lizards are a widespread group of squamate reptiles,
+                          with over 6,000 species, ranging across all continents
+                          except Antarctica
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          className="cardtext"
+                          sx={{
+                            mt: "10px",
+                            p: "0",
+                            display: "block",
+                            textAlign: "center",
+                          }}
+                        >
+                          $550
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions
+                      className="cardbg"
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        m: "0",
+                        pb: "10",
+                      }}
+                    >
+                      <Button
+                        size="small"
+                        color="error"
+                        variant="contained"
+                        sx={{ px: "30px", mr: "10px", ml: "0px" }}
+                      >
+                        -
+                      </Button>
+                      <Button
+                        size="small"
+                        disabled
+                        variant="contained"
                         sx={{
-                          textAlign: "center",
+                          px: "5px",
+                          mx: "10px",
+                          bgcolor: "gray!important",
                         }}
                       >
-                        Lizard
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                          textAlign: "center",
-                        }}
+                        0
+                      </Button>
+                      <Button
+                        size="small"
+                        color="success"
+                        variant="contained"
+                        sx={{ px: "30px", ml: "10px" }}
                       >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        color="text"
-                        sx={{
-                          mt: "10px",
-                          p: "0",
-                          display: "block",
-                          textAlign: "center",
-                        }}
-                      >
-                        $550
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      m: "0",
-                      pb: "10",
-                    }}
-                  >
-                    <Button
-                      size="small"
-                      color="error"
-                      variant="contained"
-                      sx={{ px: "30px", mr: "10px", ml: "0px" }}
-                    >
-                      -
-                    </Button>
-                    <Button
-                      size="small"
-                      disabled
-                      variant="contained"
-                      sx={{ px: "5px", mx: "10px" }}
-                    >
-                      0
-                    </Button>
-                    <Button
-                      size="small"
-                      color="success"
-                      variant="contained"
-                      sx={{ px: "30px", ml: "10px" }}
-                    >
-                      +
-                    </Button>
-                  </CardActions>
-                </Card>
+                        +
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Badge>
               </motion.div>
             </Grid>
           ))}

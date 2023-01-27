@@ -30,6 +30,7 @@ function Login() {
     <>
       <Navbar />
       <Card
+        className="order-summary-background"
         sx={{
           width: { xs: "100vw", md: "30vw" },
           margin: "auto",
