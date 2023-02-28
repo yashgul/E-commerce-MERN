@@ -14,6 +14,7 @@
     "@hookform/error-message": "^2.0.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.3",
+    "axios": "^1.2.5",
     "framer-motion": "^8.4.3",
     "mongoose": "^6.8.3",
     "react": "^18.2.0",
@@ -21,7 +22,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.42.1",
     "react-intersection-observer": "^9.4.1",
-    "react-router-dom": "^6.6.1"
+    "react-router-dom": "^6.6.1",
+    "react-toastify": "^9.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

@@ -19,12 +19,12 @@
 
 [data-theme="light"] {
   --font-color: black;
-  --background-color: white;
+  --background-color: lightgray;
   --link-color: lightblue;
   --card-bg: white;
   --card-heading: black;
   --card-text: black;
-  --order-summary-background: rgb(221, 217, 217);
+  --order-summary-background: darkgray;
 }
 
 .cardbg {
@@ -45,7 +45,7 @@
 
 .order-summary-background {
   /* background-color: var(--order-summary-background) !important; */
-  background-color: lightgray !important;
+  background-color: var(--order-summary-background) !important;
 }
 body {
   background-color: var(--background-color) !important;

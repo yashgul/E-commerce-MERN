@@ -117,7 +117,7 @@ function OrderSummary() {
               />
             </Grid>
 
-            <Grid xs={12} sx={{ mt: 4 }}>
+            <Grid xs={12} sx={{ mt: 3 }}>
               <Typography>
                 Some payment methods may depend on location
               </Typography>
@@ -158,40 +158,6 @@ function OrderSummary() {
                   )}
                 />
               </FormControl>
-            </Grid>
-            <Grid xs={12} sx={{ mt: 4 }}>
-              <Typography>Do you have a discount code?</Typography>
-            </Grid>
-
-            <Grid xs={10}>
-              <Controller
-                name={"discountcode"}
-                control={control}
-                defaultValue=""
-                render={({
-                  field: { ref, onChange, value },
-                  fieldState: { invalid, error },
-                }) => (
-                  <TextField
-                    fullWidth
-                    onChange={onChange}
-                    value={value}
-                    id="outlined-basic"
-                    label="Apply code here"
-                    variant="filled"
-                    inputRef={ref}
-                    error={invalid}
-                    helperText={
-                      errors.discountcode ? errors.discountcode.message : ""
-                    }
-                  />
-                )}
-              />
-            </Grid>
-            <Grid xs={2}>
-              <Button variant="text" size="medium">
-                Apply
-              </Button>
             </Grid>
 
             <Grid xs={10} sx={{ mt: 4 }}>

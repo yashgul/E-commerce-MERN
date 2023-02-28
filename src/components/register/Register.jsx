@@ -16,7 +16,10 @@ import {
 import { Controller, useForm } from "react-hook-form";
 
 import { NavLink } from "react-router-dom";
-function Register() {
+
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+function Register(props) {
   const {
     handleSubmit,
     reset,
@@ -24,7 +27,28 @@ function Register() {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const navigate = useNavigate();
+  const onSubmit = (data) => {
+    console.log(data);
+    axios
+      .post("http://localhost:5000/auth/register", {
+        email: data.email,
+        password: data.pwd1,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phoneNo: data.phoneno,
+        role: data.role,
+      })
+      .then(function (response) {
+        console.log(response);
+        props.toast.success(response.data.message, { theme: "colored" });
+        navigate("../login");
+      })
+      .catch(function (error) {
+        console.log(error);
+        props.toast.error(error.response.data.error, { theme: "colored" });
+      });
+  };
 
   return (
     <>
@@ -34,8 +58,8 @@ function Register() {
         sx={{
           width: { xs: "100vw", md: "50vw" },
           margin: "auto",
-          mt: 6,
-          p: 6,
+          mt: 4,
+          p: 4,
         }}
       >
         <Typography variant="h3" sx={{ mb: 1 }}>

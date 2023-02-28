@@ -11,24 +11,34 @@ import AdminItemList from "./components/adminItemList/AdminItemList";
 
 import { createContext, useEffect, useState } from "react";
 import { ThemeContextProvider } from "./ThemeContext";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
+  const notify = () => toast("Wow so easy!");
   return (
     <>
       <ThemeContextProvider>
+        <ToastContainer />
         <Routes>
-          <Route path="/adminOrderList" element={<AdminOrderList />}></Route>
+          <Route
+            path="/adminOrderList"
+            element={<AdminOrderList notify={notify} />}
+          ></Route>
 
-          <Route path="/adminItemList" element={<AdminItemList />}></Route>
+          <Route
+            path="/adminItemList"
+            element={<AdminItemList />}
+            props={notify}
+          ></Route>
 
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/register" element={<Register toast={toast} />}></Route>
+          <Route path="/cart" element={<Cart props={notify} />}></Route>
 
-          <Route path="/products" element={<Products />}></Route>
+          <Route path="/products" element={<Products props={notify} />}></Route>
 
-          <Route path="/register" element={<Register />}></Route>
+          <Route path="/register" element={<Register props={notify} />}></Route>
 
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login toast={toast} />}></Route>
 
           <Route path="/" element={<>About Us</>}></Route>
 

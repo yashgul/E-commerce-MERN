@@ -16,7 +16,11 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { NavLink } from "react-router-dom";
-function Login() {
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+function Login(props) {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     reset,
@@ -24,7 +28,24 @@ function Login() {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    axios
+      .post("http://localhost:5000/auth/login", {
+        email: data.email,
+        password: data.pwd1,
+        role: data.role,
+      })
+      .then(function (response) {
+        console.log(response);
+        props.toast.success(response.data.message, { theme: "colored" });
+        navigate("../products");
+      })
+      .catch(function (error) {
+        console.log(error);
+        props.toast.error(error.response.data.error, { theme: "colored" });
+      });
+  };
 
   return (
     <>
@@ -34,8 +55,8 @@ function Login() {
         sx={{
           width: { xs: "100vw", md: "30vw" },
           margin: "auto",
-          mt: 6,
-          p: 6,
+          mt: 4,
+          p: 4,
         }}
       >
         <Typography variant="h3" sx={{ mb: 1 }}>

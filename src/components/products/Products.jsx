@@ -14,12 +14,28 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import Badge from "@mui/material/Badge";
-
+import axios from "axios";
 import { motion } from "framer-motion";
+
 function Products() {
-  let arr = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ];
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:5000/products/userproducts/63c9824c124827290c04bc02"
+      )
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        setItems(response.data.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -31,8 +47,8 @@ function Products() {
           alignItems="center"
           justifyContent="center"
         >
-          {arr.map((item) => (
-            <Grid xs={11} md={6} lg={4} xl={3}>
+          {items.map((item) => (
+            <Grid xs={11} md={6} lg={4} xl={3} key={item._id}>
               <motion.div
                 initial="hidden"
                 variants={{
@@ -52,7 +68,7 @@ function Products() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <Badge badgeContent={"3 left"} color="warning">
+                <Badge badgeContent={item.quantity} color="warning">
                   <Card>
                     <CardActionArea>
                       <CardMedia
@@ -71,7 +87,7 @@ function Products() {
                           }}
                           className="cardhead"
                         >
-                          Lizard
+                          {item.name}
                         </Typography>
                         <Typography
                           variant="body2"
@@ -80,9 +96,7 @@ function Products() {
                           }}
                           className="cardtext"
                         >
-                          Lizards are a widespread group of squamate reptiles,
-                          with over 6,000 species, ranging across all continents
-                          except Antarctica
+                          {item.about}
                         </Typography>
                         <Typography
                           variant="h6"
@@ -94,7 +108,7 @@ function Products() {
                             textAlign: "center",
                           }}
                         >
-                          $550
+                          ${item.cost}
                         </Typography>
                       </CardContent>
                     </CardActionArea>
@@ -113,6 +127,34 @@ function Products() {
                         color="error"
                         variant="contained"
                         sx={{ px: "30px", mr: "10px", ml: "0px" }}
+                        onClick={() => {
+                          const newProductList = items.map((newitem) => {
+                            if (newitem._id !== item._id) {
+                              return newitem;
+                            } else {
+                              return {
+                                ...item,
+                                quantityInCart: newitem.quantityInCart - 1,
+                              };
+                            }
+                          });
+
+                          setItems(newProductList);
+
+                          axios
+                            .post(
+                              "http://localhost:5000/cart/removeItem/63c9824c124827290c04bc02",
+                              {
+                                pid: item._id,
+                              }
+                            )
+                            .then(function (response) {
+                              console.log(response);
+                            })
+                            .catch(function (error) {
+                              console.log(error);
+                            });
+                        }}
                       >
                         -
                       </Button>
@@ -124,15 +166,48 @@ function Products() {
                           px: "5px",
                           mx: "10px",
                           bgcolor: "gray!important",
+                          color: "white!important",
                         }}
                       >
-                        0
+                        {item.quantityInCart}
                       </Button>
                       <Button
                         size="small"
                         color="success"
                         variant="contained"
                         sx={{ px: "30px", ml: "10px" }}
+                        onClick={() => {
+                          const newProductList = items.map((newitem) => {
+                            if (newitem._id !== item._id) {
+                              return newitem;
+                            } else {
+                              return {
+                                ...item,
+                                quantityInCart: newitem.quantityInCart + 1,
+                              };
+                            }
+                          });
+
+                          setItems(newProductList);
+
+                          // Re-render with the new array
+
+                          axios
+                            .post(
+                              "http://localhost:5000/cart/addItem/63c9824c124827290c04bc02",
+                              {
+                                pid: item._id,
+                                name: item.name,
+                                cost: item.cost,
+                              }
+                            )
+                            .then(function (response) {
+                              console.log(response);
+                            })
+                            .catch(function (error) {
+                              console.log(error);
+                            });
+                        }}
                       >
                         +
                       </Button>
@@ -143,8 +218,6 @@ function Products() {
             </Grid>
           ))}
         </Grid>
-
-        <Pagination count={10} />
       </Container>
     </>
   );
