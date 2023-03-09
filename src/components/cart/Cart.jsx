@@ -18,13 +18,15 @@ import axios from "axios";
 
 function Cart() {
   const [cart, setCart] = useState([]);
+  const [cost, setCost] = useState(0);
   useEffect(() => {
     axios
       .get("http://localhost:5000/cart/cart/63c9824c124827290c04bc02")
       .then(function (response) {
         // handle success
-        console.log(response?.data?.data?.[0].cart);
-        setCart(response?.data?.data?.[0].cart);
+        console.log(response);
+        setCart(response?.data?.data?.cart);
+        setCost(response?.data?.cost);
       })
       .catch(function (error) {
         // handle error
@@ -38,10 +40,20 @@ function Cart() {
       <Container maxWidth={false}>
         <Grid container sx={{ pt: 6 }}>
           <Grid xs={12} md={8}>
-            <CartItems cart={cart} />
+            <CartItems
+              cart={cart}
+              setCart={setCart}
+              cost={cost}
+              setCost={setCost}
+            />
           </Grid>
           <Grid xs={12} md={4}>
-            <OrderSummary />
+            <OrderSummary
+              cart={cart}
+              setCart={setCart}
+              cost={cost}
+              setCost={setCost}
+            />
           </Grid>
         </Grid>
       </Container>

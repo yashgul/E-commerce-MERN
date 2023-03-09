@@ -126,6 +126,7 @@ function Products() {
                         size="small"
                         color="error"
                         variant="contained"
+                        disabled={item.quantityInCart > 0 ? false : true}
                         sx={{ px: "30px", mr: "10px", ml: "0px" }}
                         onClick={() => {
                           const newProductList = items.map((newitem) => {

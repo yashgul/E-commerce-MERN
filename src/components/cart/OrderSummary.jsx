@@ -11,8 +11,8 @@ import Button from "@mui/material/Button";
 
 import { Controller, useForm } from "react-hook-form";
 
-function OrderSummary() {
-  const [age, setAge] = useState("");
+function OrderSummary({ cost, setCost, cart, setCart }) {
+  // const [age, setAge] = useState("");
 
   const {
     handleSubmit,
@@ -161,23 +161,25 @@ function OrderSummary() {
             </Grid>
 
             <Grid xs={10} sx={{ mt: 4 }}>
-              <Typography>{"Subtotal (2 items)"}</Typography>
+              <Typography>
+                {"Subtotal ( " + cart?.length + "  items)"}
+              </Typography>
             </Grid>
             <Grid xs={2} sx={{ mt: 4 }}>
-              <Typography>$123</Typography>
+              <Typography>{"$" + cost}</Typography>
             </Grid>
             <Grid xs={10}>
               <Typography>CGST</Typography>
             </Grid>
             <Grid xs={2}>
-              <Typography>$12</Typography>
+              <Typography>{"$" + (cost * 5) / 100}</Typography>
             </Grid>
 
             <Grid xs={10}>
               <Typography>Total</Typography>
             </Grid>
             <Grid xs={2}>
-              <Typography>$163</Typography>
+              <Typography>{"$" + (cost * 105) / 100}</Typography>
             </Grid>
 
             <Grid
