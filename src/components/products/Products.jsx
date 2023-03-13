@@ -19,19 +19,17 @@ import { motion } from "framer-motion";
 
 function Products() {
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
+
+  const userdata = JSON.parse(localStorage.getItem("userdata"));
   useEffect(() => {
+    console.log(userdata);
     axios
-      .get(
-        "http://localhost:5000/products/userproducts/63c9824c124827290c04bc02"
-      )
+      .get("http://localhost:5000/products/userproducts/" + userdata.id)
       .then(function (response) {
-        // handle success
         console.log(response);
         setItems(response.data.data);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       });
   }, []);
@@ -68,7 +66,7 @@ function Products() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <Badge badgeContent={item.quantity} color="warning">
+                <Badge badgeContent={item.quantity} color="warning" showZero>
                   <Card>
                     <CardActionArea>
                       <CardMedia
@@ -144,7 +142,8 @@ function Products() {
 
                           axios
                             .post(
-                              "http://localhost:5000/cart/removeItem/63c9824c124827290c04bc02",
+                              "http://localhost:5000/cart/removeItem/" +
+                                userdata.id,
                               {
                                 pid: item._id,
                               }
@@ -195,7 +194,8 @@ function Products() {
 
                           axios
                             .post(
-                              "http://localhost:5000/cart/addItem/63c9824c124827290c04bc02",
+                              "http://localhost:5000/cart/addItem/" +
+                                userdata.id,
                               {
                                 pid: item._id,
                                 name: item.name,

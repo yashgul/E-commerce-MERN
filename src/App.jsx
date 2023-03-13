@@ -20,23 +20,16 @@ function App() {
       <ThemeContextProvider>
         <ToastContainer />
         <Routes>
-          <Route
-            path="/adminOrderList"
-            element={<AdminOrderList notify={notify} />}
-          ></Route>
+          <Route path="/adminOrderList" element={<AdminOrderList />}></Route>
 
-          <Route
-            path="/adminItemList"
-            element={<AdminItemList />}
-            props={notify}
-          ></Route>
+          <Route path="/adminItemList" element={<AdminItemList />}></Route>
 
           <Route path="/register" element={<Register toast={toast} />}></Route>
-          <Route path="/cart" element={<Cart props={notify} />}></Route>
+          <Route path="/cart" element={<Cart toast={toast} />}></Route>
 
-          <Route path="/products" element={<Products props={notify} />}></Route>
+          <Route path="/products" element={<Products />}></Route>
 
-          <Route path="/register" element={<Register props={notify} />}></Route>
+          <Route path="/register" element={<Register />}></Route>
 
           <Route path="/login" element={<Login toast={toast} />}></Route>
 

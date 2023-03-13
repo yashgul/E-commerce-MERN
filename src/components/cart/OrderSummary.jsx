@@ -8,11 +8,11 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import { countries } from "../../assets/countryList";
 import Button from "@mui/material/Button";
-
+import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
-
-function OrderSummary({ cost, setCost, cart, setCart }) {
-  // const [age, setAge] = useState("");
+import { useNavigate } from "react-router-dom";
+function OrderSummary({ cost, setCost, cart, setCart, toast }) {
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -21,7 +21,20 @@ function OrderSummary({ cost, setCost, cart, setCart }) {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const userdata = JSON.parse(localStorage.getItem("userdata"));
+    axios
+      .post("http://localhost:5000/cart/checkout/" + userdata.id)
+      .then(function (response) {
+        console.log(response);
+        toast.success("Your order has been confirmed", { theme: "colored" });
+        navigate("../products");
+      })
+      .catch(function (error) {
+        console.log(error);
+        toast.error(error.response.data.error, { theme: "colored" });
+      });
+  };
 
   return (
     <>

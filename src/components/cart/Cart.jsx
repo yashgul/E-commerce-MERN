@@ -16,12 +16,15 @@ import OrderSummary from "./OrderSummary";
 import CartItems from "./CartItems";
 import axios from "axios";
 
-function Cart() {
+function Cart({ toast }) {
   const [cart, setCart] = useState([]);
   const [cost, setCost] = useState(0);
+
+  let userdata = "";
   useEffect(() => {
+    userdata = JSON.parse(localStorage.getItem("userdata"));
     axios
-      .get("http://localhost:5000/cart/cart/63c9824c124827290c04bc02")
+      .get("http://localhost:5000/cart/cart/" + userdata.id)
       .then(function (response) {
         // handle success
         console.log(response);
@@ -49,6 +52,7 @@ function Cart() {
           </Grid>
           <Grid xs={12} md={4}>
             <OrderSummary
+              toast={toast}
               cart={cart}
               setCart={setCart}
               cost={cost}

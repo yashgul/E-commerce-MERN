@@ -61,7 +61,8 @@ function CartItems({ cost, setCost, cart, setCart }) {
                         console.log("item", item);
                         axios
                           .post(
-                            "http://localhost:5000/cart/removeItem/63c9824c124827290c04bc02",
+                            "http://localhost:5000/cart/removeItem/" +
+                              userdata.id,
                             {
                               pid: item.pid,
                             }
@@ -113,7 +114,7 @@ function CartItems({ cost, setCost, cart, setCart }) {
 
                         axios
                           .post(
-                            "http://localhost:5000/cart/addItem/63c9824c124827290c04bc02",
+                            "http://localhost:5000/cart/addItem/" + userdata.id,
                             {
                               pid: item.pid,
                               name: item.name,

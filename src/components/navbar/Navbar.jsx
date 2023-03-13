@@ -15,7 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../../ThemeContext";
 
@@ -127,7 +127,7 @@ function Navbar(props) {
               flexGrow: 0,
             }}
           >
-            <NavLink to="../login" style={{ textDecoration: "none" }}>
+            {/* <NavLink to="../login" style={{ textDecoration: "none" }}>
               <Button
                 sx={{
                   ml: "5px",
@@ -151,7 +151,9 @@ function Navbar(props) {
               >
                 Register
               </Button>
-            </NavLink>
+            </NavLink> */}
+
+            <AccountCircleIcon />
           </Box>
         </Toolbar>
       </AppBar>

@@ -37,7 +37,11 @@ function Login(props) {
         role: data.role,
       })
       .then(function (response) {
-        console.log(response);
+        console.log(response.data.token);
+        localStorage.setItem(
+          "userdata",
+          JSON.stringify({ jwt: response.data.token, id: response.data.id })
+        );
         props.toast.success(response.data.message, { theme: "colored" });
         navigate("../products");
       })
