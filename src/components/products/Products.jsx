@@ -20,11 +20,11 @@ import { motion } from "framer-motion";
 function Products() {
   const [items, setItems] = useState([]);
 
-  const userdata = JSON.parse(localStorage.getItem("userdata"));
+  const userdata = JSON.parse(localStorage.getItem("userdata") || null);
   useEffect(() => {
     console.log(userdata);
     axios
-      .get("http://localhost:5000/products/userproducts/" + userdata.id)
+      .get("http://localhost:5000/products/userproducts/" + userdata?.id)
       .then(function (response) {
         console.log(response);
         setItems(response.data.data);
@@ -46,7 +46,7 @@ function Products() {
           justifyContent="center"
         >
           {items.map((item) => (
-            <Grid xs={11} md={6} lg={4} xl={3} key={item._id}>
+            <Grid xs={11} md={6} lg={3} xl={3} key={item._id}>
               <motion.div
                 initial="hidden"
                 variants={{
@@ -66,8 +66,13 @@ function Products() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                <Badge badgeContent={item.quantity} color="warning" showZero>
-                  <Card>
+                <Badge
+                  badgeContent={item.quantity}
+                  color="warning"
+                  showZero
+                  sx={{ width: "100%" }}
+                >
+                  <Card sx={{ width: "100%" }}>
                     <CardActionArea>
                       <CardMedia
                         component="img"
@@ -143,7 +148,7 @@ function Products() {
                           axios
                             .post(
                               "http://localhost:5000/cart/removeItem/" +
-                                userdata.id,
+                                userdata?.id,
                               {
                                 pid: item._id,
                               }
@@ -195,7 +200,7 @@ function Products() {
                           axios
                             .post(
                               "http://localhost:5000/cart/addItem/" +
-                                userdata.id,
+                                userdata?.id,
                               {
                                 pid: item._id,
                                 name: item.name,

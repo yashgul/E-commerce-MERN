@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import axios from "axios";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,6 +22,19 @@ function Products() {
   let arr = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ];
+  const userdata = JSON.parse(localStorage.getItem("userdata") || null);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/products/products")
+      .then(function (response) {
+        console.log(response);
+        setItems(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <AdminNav />
@@ -31,8 +46,8 @@ function Products() {
           alignItems="center"
           justifyContent="center"
         >
-          {arr.map((item) => (
-            <Grid xs={11} md={6} lg={4} xl={3}>
+          {items.map((item) => (
+            <Grid xs={11} md={6} lg={3} xl={3} key={item._id}>
               <motion.div
                 initial="hidden"
                 variants={{
@@ -70,7 +85,7 @@ function Products() {
                         }}
                         className="cardhead"
                       >
-                        Lizard
+                        {item.name}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -79,9 +94,7 @@ function Products() {
                         }}
                         className="cardtext"
                       >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
+                        {item.about}
                       </Typography>
                       <Typography
                         variant="h6"
@@ -93,7 +106,7 @@ function Products() {
                           textAlign: "center",
                         }}
                       >
-                        $550
+                        ${item.cost}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -105,14 +118,40 @@ function Products() {
                       alignItems: "center",
                       m: "0",
                       pb: "10",
-                      flexWrap: "wrap",
                     }}
                   >
                     <Button
                       size="small"
-                      color="warning"
+                      color="error"
                       variant="contained"
+                      disabled={item.quantity > 0 ? false : true}
                       sx={{ px: "30px", mr: "10px", ml: "0px" }}
+                      onClick={() => {
+                        const newProductList = items.map((newitem) => {
+                          if (newitem._id !== item._id) {
+                            return newitem;
+                          } else {
+                            return {
+                              ...item,
+                              quantity: newitem.quantity - 1,
+                            };
+                          }
+                        });
+
+                        setItems(newProductList);
+
+                        axios
+                          .post(
+                            "http://localhost:5000/admin/removeQuantity/" +
+                              item._id
+                          )
+                          .then(function (response) {
+                            console.log(response);
+                          })
+                          .catch(function (error) {
+                            console.log(error);
+                          });
+                      }}
                     >
                       -
                     </Button>
@@ -123,28 +162,47 @@ function Products() {
                       sx={{
                         px: "5px",
                         mx: "10px",
-                        bgcolor: "white!important",
-                        border: "1px solid lightgray",
+                        bgcolor: "gray!important",
+                        color: "white!important",
                       }}
                     >
-                      0
+                      {item.quantity}
                     </Button>
                     <Button
                       size="small"
                       color="success"
                       variant="contained"
                       sx={{ px: "30px", ml: "10px" }}
+                      onClick={() => {
+                        const newProductList = items.map((newitem) => {
+                          if (newitem._id !== item._id) {
+                            return newitem;
+                          } else {
+                            return {
+                              ...item,
+                              quantity: newitem.quantity + 1,
+                            };
+                          }
+                        });
+
+                        setItems(newProductList);
+
+                        // Re-render with the new array
+
+                        axios
+                          .post(
+                            "http://localhost:5000/admin/addQuantity/" +
+                              item._id
+                          )
+                          .then(function (response) {
+                            console.log(response);
+                          })
+                          .catch(function (error) {
+                            console.log(error);
+                          });
+                      }}
                     >
                       +
-                    </Button>
-
-                    <Button
-                      size="small"
-                      color="error"
-                      variant="contained"
-                      sx={{ px: "30px", m: "10px", width: "70%" }}
-                    >
-                      Remove Item
                     </Button>
                   </CardActions>
                 </Card>
@@ -152,8 +210,6 @@ function Products() {
             </Grid>
           ))}
         </Grid>
-
-        <Pagination count={10} />
       </Container>
     </>
   );

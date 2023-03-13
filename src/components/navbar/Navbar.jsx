@@ -29,12 +29,18 @@ function Navbar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [isDarkMode, setIsDarkMode] = useContext(ThemeContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     if (isDarkMode == true)
       document.documentElement.setAttribute("data-theme", "dark");
     else document.documentElement.setAttribute("data-theme", "light");
   }, [isDarkMode]);
 
+  useEffect(() => {
+    if (localStorage.getItem("userdata")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -127,33 +133,37 @@ function Navbar(props) {
               flexGrow: 0,
             }}
           >
-            {/* <NavLink to="../login" style={{ textDecoration: "none" }}>
-              <Button
-                sx={{
-                  ml: "5px",
-                  color: "#fff",
-                  position: "relative",
-                  textTransform: "capitalize",
-                }}
-              >
-                Login
-              </Button>
-            </NavLink>
-            <NavLink to="../register" style={{ textDecoration: "none" }}>
-              <Button
-                sx={{
-                  ml: "5px",
-                  color: "#fff",
-                  position: "relative",
-                  textTransform: "capitalize",
-                  bgcolor: " gray",
-                }}
-              >
-                Register
-              </Button>
-            </NavLink> */}
+            {!isLoggedIn && (
+              <>
+                <NavLink to="../login" style={{ textDecoration: "none" }}>
+                  <Button
+                    sx={{
+                      ml: "5px",
+                      color: "#fff",
+                      position: "relative",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </NavLink>
+                <NavLink to="../register" style={{ textDecoration: "none" }}>
+                  <Button
+                    sx={{
+                      ml: "5px",
+                      color: "#fff",
+                      position: "relative",
+                      textTransform: "capitalize",
+                      bgcolor: " gray",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </NavLink>
+              </>
+            )}
 
-            <AccountCircleIcon />
+            {isLoggedIn && <AccountCircleIcon />}
           </Box>
         </Toolbar>
       </AppBar>
